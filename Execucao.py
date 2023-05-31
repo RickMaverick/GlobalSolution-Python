@@ -20,4 +20,6 @@ if possui_cadastro == 0:
       cadastro = cd.cadastrar()
 
 elif possui_cadastro == 1:
-      cd.verifica_cadastro(cadastro)
+      cadastro = cd.verifica_cadastro(cadastro)
+
+print(cadastro)
