@@ -1,4 +1,5 @@
 import Cadastro as cd
+import Tickets as tk
 
 print("Bem vindo ao FoodBridge! Junte-se a nós e vamos quebrar as barreiras contra a fome.")
 
@@ -22,4 +23,7 @@ if possui_cadastro == 0:
 elif possui_cadastro == 1:
       cadastro = cd.verifica_cadastro(cadastro)
 
-print(cadastro)
+#Ticket confirmando dados do cadastro
+ticket_cadastro = tk.gera_ticket_cadastro(cadastro)
+
+#Fazer Doação
