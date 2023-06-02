@@ -1,3 +1,4 @@
+import Doacao
 import Cadastro as cd
 import Tickets as tk
 
@@ -27,3 +28,4 @@ elif possui_cadastro == 1:
 ticket_cadastro = tk.gera_ticket_cadastro(cadastro)
 
 #Fazer Doação
+Doacao.perguntar_doacao(cadastro)

@@ -30,6 +30,7 @@ def cadastrar_doador():
 
     # Cadastro - Guardando identificadores e senha
     if categoria == "PF":
+        tipo_cadastro = "DOADOR"
         cadastro = []
         nome = input("Me informe seu 1º Nome: ")
         sobrenome = input(f"{nome}, qual é seu sobrenome: ")
@@ -37,10 +38,11 @@ def cadastrar_doador():
         email = input("Seu melhor E-mail, por favor: ")
         telefone = solicita_telefone()
         senha = input("Por último, digite uma senha: ")
+        cadastro.append(tipo_cadastro)
         cadastro.append(categoria)
         cadastro.append(nome)
         cadastro.append(sobrenome)
-        cadastro.append(cpf) #identificador CPF índice 3
+        cadastro.append(cpf) #identificador CPF índice 4
         cadastro.append(email)
         cadastro.append(telefone)
         cadastro.append(senha)
@@ -48,6 +50,7 @@ def cadastrar_doador():
               "Agora você está um passo a menos de dar seu 1º Match com um beneficiário.")
 
     elif categoria == "PJ":
+        tipo_cadastro = "DOADOR"
         cadastro = []
         nome_empresa = input("Me informe o Nome fantasia da empresa: ")
         segmento_empresa = input("Seguimento da Empresa: ")
@@ -58,10 +61,11 @@ def cadastrar_doador():
             "A próxima pergunta é importante pois é um dos critérios que nosso sistema utiliza para nossas recomendações de Beneficiário.")
         categoria_faturamento = solicita_faturamento(nome_empresa)
         senha = input("Por último, digite uma senha: ")
+        cadastro.append(tipo_cadastro)
         cadastro.append(categoria)
         cadastro.append(nome_empresa)
         cadastro.append(segmento_empresa)
-        cadastro.append(cnpj) #identificador CNPJ índice 3
+        cadastro.append(cnpj) #identificador CNPJ índice 4
         cadastro.append(email)
         cadastro.append(telefone)
         cadastro.append(categoria_faturamento)
@@ -93,21 +97,19 @@ def cadastrar_beneficiario():
 
 
     # Cadastro - Guardando identificadores e senha
+    tipo_cadastro = "BENEFICIARIO"
     cadastro = []
-    nome_beneficiario = input("Me informe o Nome: ")
+    nome_beneficiario = input("Me informe o Nome da Instituição: ")
     tipo_beneficiario = seguimenta_tipo_beneficiario(nome_beneficiario)
-    segmento_empresa = input("Seguimento da Empresa: ")
-    cnpj = input("Agora me informe o CNPJ: ")
     email = input("Digite o E-mail que sera usado para login: ")
     telefone = solicita_telefone()
     print("Seu cadastro está quase pronto!\n"
         "A próxima pergunta é importante pois é um dos critérios que nosso sistema utiliza para a recomendação de um Beneficiário a uma empresa ou pessoa.")
     porte_beneficiario = solicita_dependentes(nome_beneficiario)
     senha = input("Por último, digite uma senha: ")
+    cadastro.append(tipo_cadastro)
     cadastro.append(categoria)
     cadastro.append(nome_beneficiario)
-    cadastro.append(segmento_empresa)
-    cadastro.append(cnpj) #identificador CPF índice 3
     cadastro.append(email)
     cadastro.append(telefone)
     cadastro.append(porte_beneficiario)
@@ -192,24 +194,45 @@ def solicita_telefone():
         else:
             print("Digite apenas números.")
 
+def solicita_localizacao(tipo_cadastro):
+    if tipo_cadastro == "DOADOR":
+        while True:
+            print("Em qual estado sua Instituição está localizada?")
+            estado = input("1 - São Paulo\n"
+                "2 - Espirito Santo\n"
+                "3 - Rio de Janeiro\n"
+                "4 - Minas Gerais")
+            if estado.isdigit():
+                if int(estado) == 1:
+                    print()
+
+    #elif tipo_cadastro == "BENEFICIARIO":
+
+
 def cadastrar_porte_beneficiario(categoria):
     if int(categoria) == 1:
         categoria = "ONG"
         print(f"Uma {categoria}? Que legal!")
+        return categoria
     elif int(categoria) == 2:
         categoria = "Escola Pública"
         print(f"Uma {categoria}, que bom!")
+        return categoria
     elif int(categoria) == 3:
         categoria = "Orfanato"
         print(f"{categoria} né, anotado!")
+        return categoria
     elif int(categoria) == 4:
         categoria = "Asilo"
         print(f"Um {categoria} é sempre bem vindo!")
+        return categoria
     elif int(categoria) == 5:
         categoria = "Projeto Social"
         print(f"Um {categoria} é sempre bem vindo!")
+        return categoria
     elif int(categoria) == 6:
         categoria = input("Digite o tipo de sua Instituição: ")
+        return categoria
     else:
         print("Não Entendi.")
         while True:
@@ -225,7 +248,6 @@ def cadastrar_porte_beneficiario(categoria):
                 break
             else:
                 print("Não entendi sua resposta.")
-    return categoria
 
 def seguimenta_tipo_beneficiario(nome_beneficiario):
     print("Qual frase você mais identifica que contempla a finalidade das doações a sua Instituição?")
