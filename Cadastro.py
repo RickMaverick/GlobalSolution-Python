@@ -30,40 +30,48 @@ def cadastrar_doador():
 
     # Cadastro - Guardando identificadores e senha
     if categoria == "PF":
+        tipo_cadastro = "DOADOR"
         cadastro = []
-        nome = input("Me informe seu 1º Nome: ")
-        sobrenome = input(f"{nome}, qual é seu sobrenome: ")
+        nome = input("Me informe seu 1º Nome: ").title()
+        sobrenome = input(f"{nome}, qual é seu sobrenome: ").title()
         cpf = input("Agora me informe seu CPF: ")
         email = input("Seu melhor E-mail, por favor: ")
         telefone = solicita_telefone()
+        localizacao = solicita_localizacao()
         senha = input("Por último, digite uma senha: ")
+        cadastro.append(tipo_cadastro)
         cadastro.append(categoria)
         cadastro.append(nome)
         cadastro.append(sobrenome)
-        cadastro.append(cpf) #identificador CPF índice 3
+        cadastro.append(cpf) #identificador CPF índice 4
         cadastro.append(email)
         cadastro.append(telefone)
+        cadastro.append(localizacao)
         cadastro.append(senha)
         print(f"Parabens, {nome}, seu cadastro foi feito com Sucesso!\n"
               "Agora você está um passo a menos de dar seu 1º Match com um beneficiário.")
 
     elif categoria == "PJ":
+        tipo_cadastro = "DOADOR"
         cadastro = []
-        nome_empresa = input("Me informe o Nome fantasia da empresa: ")
-        segmento_empresa = input("Seguimento da Empresa: ")
+        nome_empresa = input("Me informe o Nome fantasia da empresa: ").title()
+        segmento_empresa = input("Seguimento da Empresa: ").title()
         cnpj = input("Agora me informe o CNPJ: ")
         email = input("Digite o E-mail que sera usado para login: ")
         telefone = solicita_telefone()
+        localizacao = solicita_localizacao()
         print("Seu cadastro está quase pronto!\n"
             "A próxima pergunta é importante pois é um dos critérios que nosso sistema utiliza para nossas recomendações de Beneficiário.")
         categoria_faturamento = solicita_faturamento(nome_empresa)
         senha = input("Por último, digite uma senha: ")
+        cadastro.append(tipo_cadastro)
         cadastro.append(categoria)
         cadastro.append(nome_empresa)
         cadastro.append(segmento_empresa)
-        cadastro.append(cnpj) #identificador CNPJ índice 3
+        cadastro.append(cnpj) #identificador CNPJ índice 4
         cadastro.append(email)
         cadastro.append(telefone)
+        cadastro.append(localizacao)
         cadastro.append(categoria_faturamento)
         cadastro.append(senha)
         print(f"O Cadastro de {nome_empresa}, foi feito com Sucesso!\n"
@@ -84,32 +92,32 @@ def cadastrar_beneficiario():
 
     # Cadastro - categoria
     while True:
-        categoria = input("Digite o código correspondente ao tipo de sua Instituição: ")
-        if categoria.isdigit():
-            cadastrar_porte_beneficiario(categoria)
+        categoria_beneficiario = input("Digite o código correspondente ao tipo de sua Instituição: ")
+        if categoria_beneficiario.isdigit():
+            categoria = cadastrar_categoria_beneficiario(categoria_beneficiario)
             break
         else:
             print("Não entendi sua resposta.")
 
 
     # Cadastro - Guardando identificadores e senha
+    tipo_cadastro = "BENEFICIARIO"
     cadastro = []
-    nome_beneficiario = input("Me informe o Nome: ")
+    nome_beneficiario = input("Me informe o Nome da Instituição: ").title()
     tipo_beneficiario = seguimenta_tipo_beneficiario(nome_beneficiario)
-    segmento_empresa = input("Seguimento da Empresa: ")
-    cnpj = input("Agora me informe o CNPJ: ")
     email = input("Digite o E-mail que sera usado para login: ")
     telefone = solicita_telefone()
+    localizacao = solicita_localizacao()
     print("Seu cadastro está quase pronto!\n"
         "A próxima pergunta é importante pois é um dos critérios que nosso sistema utiliza para a recomendação de um Beneficiário a uma empresa ou pessoa.")
-    porte_beneficiario = solicita_dependentes(nome_beneficiario)
+    porte_beneficiario = calcula_porte_beneficiario(nome_beneficiario)
     senha = input("Por último, digite uma senha: ")
+    cadastro.append(tipo_cadastro)
     cadastro.append(categoria)
     cadastro.append(nome_beneficiario)
-    cadastro.append(segmento_empresa)
-    cadastro.append(cnpj) #identificador CPF índice 3
     cadastro.append(email)
     cadastro.append(telefone)
+    cadastro.append(localizacao)
     cadastro.append(porte_beneficiario)
     cadastro.append(tipo_beneficiario)
     cadastro.append(senha)
@@ -144,35 +152,35 @@ def solicita_faturamento(nome_empresa):
 
     return categoria_faturamento
 
-def solicita_dependentes(nome_beneficiario):
+def calcula_porte_beneficiario(nome_beneficiario):
     while True:
         print(f"Quantos dependentes o {nome_beneficiario} atende?\n"
               "1 - Menos ou igual a 20 pessoas\n"
               "2 - Entre 20 e 50 pessoas\n"
-              "3 - Entre 51 e 100 pessoas\n"
-              "4 - Entre 101 e 500 pessoas\n"
+              "3 - Entre 51 e 200 pessoas\n"
+              "4 - Entre 201 e 500 pessoas\n"
               "5 - Entre 501 e 1000 pessoas\n"
               "6 - Mais que 1000 pessoas\n")
-        categoria_beneficiario = input("Digite o código correspondente: ")
-        if categoria_beneficiario.isdigit():
-            if int(categoria_beneficiario) == 1:
-                categoria_beneficiario = "Menos ou igual a 20 pessoas"
-                return categoria_beneficiario
-            elif int(categoria_beneficiario) == 2:
-                categoria_beneficiario = "Entre 20 e 50 pessoas"
-                return categoria_beneficiario
-            elif int(categoria_beneficiario) == 3:
-                categoria_beneficiario = "Entre 51 e 100 pessoas"
-                return categoria_beneficiario
-            elif int(categoria_beneficiario) == 4:
-                categoria_beneficiario = "Entre 101 e 500 pessoas"
-                return categoria_beneficiario
-            elif int(categoria_beneficiario) == 5:
-                categoria_beneficiario = "Entre 501 e 1000 pessoas"
-                return categoria_beneficiario
-            elif int(categoria_beneficiario) == 6:
-                categoria_beneficiario = "Mais que 1000 pessoas"
-                return categoria_beneficiario
+        porte_beneficiario = input("Digite o código correspondente: ")
+        if porte_beneficiario.isdigit():
+            if int(porte_beneficiario) == 1:
+                porte_beneficiario = "PEQUENO PORTE"
+                return porte_beneficiario
+            elif int(porte_beneficiario) == 2:
+                porte_beneficiario = "PEQUENO PORTE"
+                return porte_beneficiario
+            elif int(porte_beneficiario) == 3:
+                porte_beneficiario = "MÉDIO PORTE"
+                return porte_beneficiario
+            elif int(porte_beneficiario) == 4:
+                porte_beneficiario = "MÉDIO PORTE"
+                return porte_beneficiario
+            elif int(porte_beneficiario) == 5:
+                porte_beneficiario = "GRANDE PORTE"
+                return porte_beneficiario
+            elif int(porte_beneficiario) == 6:
+                porte_beneficiario = "GRANDE PORTE"
+                return porte_beneficiario
             else:
                 print("Digite um número dentro das opções")
         else:
@@ -192,24 +200,172 @@ def solicita_telefone():
         else:
             print("Digite apenas números.")
 
-def cadastrar_porte_beneficiario(categoria):
-    if int(categoria) == 1:
+def solicita_localizacao():
+        while True:
+            print("Em qual estado sua Organização está localizada?")
+            estado = input("1 - São Paulo\n"
+                "2 - Espirito Santo\n"
+                "3 - Rio de Janeiro\n"
+                "4 - Minas Gerais")
+            if estado.isdigit():
+                if int(estado) == 1:
+                    print("Certo. Agora me informe a cidade:")
+                    cidade = input("1 - São Paulo\n"
+                          "2 - Guarulhos\n"
+                          "3 - Sorocaba\n"
+                          "4 - Campinhas\n"
+                          "5 - Santo André\n"
+                          "6 - São Bernardo do Campo\n"
+                          "7 - Outro")
+                    if cidade.isdigit():
+                        if int(cidade) == 1:
+                            cidade = "SÃO PAULO"
+                            estado = "SP"
+                            return estado, cidade
+                        elif int(cidade) == 2:
+                            cidade = "GUARULHOS"
+                            estado = "SP"
+                            return estado, cidade
+                        elif int(cidade) == 3:
+                            cidade = "SOROCABA"
+                            estado = "SP"
+                            return estado, cidade
+                        elif int(cidade) == 4:
+                            cidade = "CAMPINAS"
+                            estado = "SP"
+                            return estado, cidade
+                        elif int(cidade) == 5:
+                            cidade = "SANTO ANDRÉ"
+                            estado = "SP"
+                            return estado, cidade
+                        elif int(cidade) == 6:
+                            cidade = "SÃO BERNARDO DO CAMPO"
+                            estado = "SP"
+                            return estado, cidade
+                        elif int(cidade) == 7:
+                            cidade = input("Digite o nome da cidade: ")
+                            estado = "SP"
+                            return estado, cidade
+                        else:
+                            print("Esse número não corresponde a nenhum local")
+                if int(estado) == 2:
+                    print("Certo. Agora me informe a cidade:")
+                    cidade = input("1 - Vitória\n"
+                          "2 - Linhares\n"
+                          "3 - Aracruz\n"
+                          "4 - Vila Velha\n"
+                          "5 - Outro")
+                    if cidade.isdigit():
+                        if int(cidade) == 1:
+                            cidade = "VITÓRIA"
+                            estado = "ES"
+                            return estado, cidade
+                        elif int(cidade) == 2:
+                            cidade = "LINHARES"
+                            estado = "ES"
+                            return estado, cidade
+                        elif int(cidade) == 3:
+                            cidade = "ARACRUZ"
+                            estado = "ES"
+                            return estado, cidade
+                        elif int(cidade) == 4:
+                            cidade = "VILA VELHA"
+                            estado = "ES"
+                            return estado, cidade
+                        elif int(cidade) == 5:
+                            cidade = input("Digite o nome da cidade: ")
+                            estado = "ES"
+                            return estado, cidade
+                        else:
+                            print("Esse número não corresponde a nenhum local")
+                if int(estado) == 3:
+                    print("Certo. Agora me informe a cidade:")
+                    cidade = input("1 - Rio de Janeiro\n"
+                          "2 - São Gonçalo\n"
+                          "3 - Duque de Caxias\n"
+                          "4 - Nova Iguaçu\n"
+                          "5 - Outro")
+                    if cidade.isdigit():
+                        if int(cidade) == 1:
+                            cidade = "RIO DE JANEIRO"
+                            estado = "RJ"
+                            return estado, cidade
+                        elif int(cidade) == 2:
+                            cidade = "SÃO GONCALO"
+                            estado = "RJ"
+                            return estado, cidade
+                        elif int(cidade) == 3:
+                            cidade = "DUQUE DE CAXIAS"
+                            estado = "RJ"
+                            return estado, cidade
+                        elif int(cidade) == 4:
+                            cidade = "NOVA IGUACU"
+                            estado = "RJ"
+                            return estado, cidade
+                        elif int(cidade) == 2:
+                            cidade = input("Digite o nome da cidade: ")
+                            estado = "RJ"
+                            return estado, cidade
+                        else:
+                            print("Esse número não corresponde a nenhum local")
+                if int(estado) == 4:
+                    print("Certo. Agora me informe a cidade:")
+                    cidade = input("1 - Uberlândia\n"
+                          "2 - Belo Horizonte\n"
+                          "3 - Juiz de Fora\n"
+                          "4 - Montes Claros\n"
+                          "5 - Outro")
+                    if cidade.isdigit():
+                        if int(cidade) == 1:
+                            cidade = "UBERLANDIA"
+                            estado = "MG"
+                            return estado, cidade
+                        elif int(cidade) == 2:
+                            cidade = "BELO HORIZONTE"
+                            estado = "MG"
+                            return estado, cidade
+                        elif int(cidade) == 3:
+                            cidade = "JUIZ DE FORA"
+                            estado = "MG"
+                            return estado, cidade
+                        elif int(cidade) == 4:
+                            cidade = "MONTES CLAROS"
+                            estado = "MG"
+                            return estado, cidade
+                        elif int(cidade) == 5:
+                            cidade = input("Digite o nome da cidade: ")
+                            estado = "MG"
+                            return estado, cidade
+                        else:
+                            print("Esse número não corresponde a nenhuma cidade")
+                else:print("Esse número não corresponde a nenhum estado")
+            else:
+                print("Digite apenas números")
+
+def cadastrar_categoria_beneficiario(categoria_beneficiario):
+    if int(categoria_beneficiario) == 1:
         categoria = "ONG"
         print(f"Uma {categoria}? Que legal!")
-    elif int(categoria) == 2:
+        return categoria
+    elif int(categoria_beneficiario) == 2:
         categoria = "Escola Pública"
         print(f"Uma {categoria}, que bom!")
-    elif int(categoria) == 3:
+        return categoria
+    elif int(categoria_beneficiario) == 3:
         categoria = "Orfanato"
         print(f"{categoria} né, anotado!")
-    elif int(categoria) == 4:
+        return categoria
+    elif int(categoria_beneficiario) == 4:
         categoria = "Asilo"
         print(f"Um {categoria} é sempre bem vindo!")
-    elif int(categoria) == 5:
+        return categoria
+    elif int(categoria_beneficiario) == 5:
         categoria = "Projeto Social"
         print(f"Um {categoria} é sempre bem vindo!")
-    elif int(categoria) == 6:
+        return categoria
+    elif int(categoria_beneficiario) == 6:
         categoria = input("Digite o tipo de sua Instituição: ")
+        return categoria
     else:
         print("Não Entendi.")
         while True:
@@ -221,18 +377,17 @@ def cadastrar_porte_beneficiario(categoria):
             "6 - Outros\n"
             "Digite o código correspondente ao tipo de sua Instituição: ")
             if categoria.isdigit():
-                cadastrar_porte_beneficiario(categoria)
+                cadastrar_categoria_beneficiario(categoria)
                 break
             else:
                 print("Não entendi sua resposta.")
-    return categoria
 
 def seguimenta_tipo_beneficiario(nome_beneficiario):
     print("Qual frase você mais identifica que contempla a finalidade das doações a sua Instituição?")
     while True:
         resposta = input(f"1 - 'Atuamos como um Ponto de Coleta. As pessoas que ajudamos vão até {nome_beneficiario}, para pegar mantimentos ou se alimentar' Exemplos: Projetos sociais locais, Escolas Públicas\n"
               f"2 - '{nome_beneficiario} utilizara das doações recebidas para abastecimento interno (cozinha, refeitório) e uso próprio de nossos membros. Exemplos: Asilos, Orfanatos, Albergues, Escolas Públicas'\n"
-              f"3 - 'As doações serão destinadas/levadas ao grupo de pessoas que a {nome_beneficiario} auxilia. Sendo que a {nome_beneficiario} atua como um intermediário entre as doações e o Grupo de Pessoas que auxiliam. Exemplos: ONGs, Projetos Sociais Maiores'")
+              f"3 - 'As doações serão destinadas/levadas ao grupo de pessoas que a {nome_beneficiario} auxilia. Sendo que a {nome_beneficiario} atua como um intermediário entre as doações e o Grupo de Pessoas em vulnerabilidade que auxiliam. Exemplos: ONGs, Projetos Sociais Maiores'")
         if resposta.isdigit():
             if int(resposta) == 1:
                 print("Frase escolhida nº1")
@@ -240,7 +395,7 @@ def seguimenta_tipo_beneficiario(nome_beneficiario):
                 return tipo_beneficiario
             elif int(resposta) == 2:
                 print("Frase escolhida nº2")
-                tipo_beneficiario = "Beneficiário Proprio"
+                tipo_beneficiario = "Beneficiario Proprio"
                 return tipo_beneficiario
             elif int(resposta) == 3:
                 print("Frase escolhida nº3")

@@ -7,3 +7,4 @@ def gera_ticket_cadastro(cadastro):
 
 
 ##Ticket de Doação
+#def gera_ticket_doacao
