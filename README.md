@@ -21,5 +21,7 @@ Dependencias
 Observações
 
 → As localizações disponiveis para cadastro abrangem apenas alguns municipios da Região Sudeste do Pais.
+
 → A aba BancoDados, é como se fosse um banco de dados dos cadastros dos Beneficiários. Dessa forma, há varios cadastros de diferentes Instituições Fictícias, além de uma função para criar uma lista com todos os cadastros, para que assim possamos iterar por esses cadastros em busca de um match.
+
 → Conforme combinado e autorizado pelos Professores Erick Toshio e Paulo Caixeta , o sistema de avaliação e dúvidas será implementado em Chatbot.
